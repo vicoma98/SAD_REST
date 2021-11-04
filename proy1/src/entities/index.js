@@ -1,8 +1,5 @@
-const{User, UserConstants}  = require('./User');
+const { fruit } = require('./Fruit');
 
-module.exports ={
-    User, 
-    constants:{ 
-        UserConstants 
-    } 
-}  
+module.exports = {
+    fruit
+}

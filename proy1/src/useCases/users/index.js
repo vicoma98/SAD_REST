@@ -1,4 +1,8 @@
-const addUserUseCase = require('./addUser.useCase');
+const addFruitUseCase = require('./addFruit.useCase');
+const removeFruitCase = require('./removeFruit.useCase');
+const listFruitCase = require('./listFruit.useCase');
 module.exports = {
-    addUserUseCase
-} 
+    addFruitUseCase,
+    removeFruitCase,
+    listFruitCase
+}

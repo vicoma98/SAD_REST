@@ -1,4 +1,4 @@
-const userControllers = require('./user');
-module.exports ={
-    userControllers
-} 
+const fruitControllers = require('./Fruit');
+module.exports = {
+    fruitControllers
+}
