@@ -1,7 +1,7 @@
 const service = "ServicioMongo";
 const axios = require('axios');
 const version = '1.0.0';
-const config = require('../config')[process.env.NODE_ENV || 'development'];
+
 
 class Carrito {
     constructor() {
@@ -16,7 +16,7 @@ class Carrito {
     async addProducto(evento) {
             try {
                 console.log('1');
-                const conexion = await axios.get(`http://localhost:3000/find/${service}/${config.version}`);
+                const conexion = await axios.get(`http://localhost:3000/find/${service}/${version}`);
                 console.log('1');
                 const ip = conexion.data.ip;
                 const port = conexion.data.port;
@@ -40,13 +40,8 @@ class Carrito {
         }
         //funcion para mostarr la cesta actual
     tostring() {
-        var res = "Shopping Cart contains " + this.products.length + " product/s: ";
-
-        this.products.forEach(product => {
-            res += product.desc + ", ";
-        });
-        console.log(res);
-        return res;
+        console.log("Tu cesta actual es: " + this.carrito);
+        return this.carrito;
     }
 
 }
