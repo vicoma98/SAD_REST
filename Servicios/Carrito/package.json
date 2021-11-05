@@ -1,7 +1,7 @@
 {
     "name": "Carrito",
     "version": "1.0.0",
-    "description": "A service to manage shop",
+    "description": "A service to manage Carrito",
     "scripts": {
         "start": "node bin/run | bunyan"
     },

@@ -1,44 +1,36 @@
-const axios = require("axios");
+const service = "ServicioMongo";
+const axios = require('axios');
+const version = '1.0.0';
+const config = require('../config')[process.env.NODE_ENV || 'development'];
 
-//let DB = require('../BBDD/conexion_bbdd');
-//clase carrito
-class ShoppingCartGenerator {
-    static async GetCart(serviceRegistryURL, databaseName, databaseVer) {
-        return await axios.get(`http://${serviceRegistryURL}/find/${databaseName}/${databaseVer}`).then((response) => {
-            if (response.status == 200) {
-                return new carrito(response.data.ip, response.data.port);
-            } else return null;
-        }).catch((err) => { return null; });
-    }
-}
 class Carrito {
-    constructor(ip, puerto) {
+    constructor() {
         this.carrito = [];
-        this.port = puerto;
-        this.ip = ip;
     }
 
-
+    newcarrito() {
+            this.carrito = [];
+            return carrito;
+        }
+        //funcion que añade un producto al carrito basandose en run() para comprobar si tiene o no stock
     async addProducto(evento) {
-            //comprobación mongodb
-            //const bol = await DB.Buscar(evento);
-            console.log(this.ip, this.port);
-            return await axios.get(`http://${this.ip}:${this.port}/Check/${evento}`).then((response) => {
-                if (response.data) {
+            try {
+                console.log('1');
+                const conexion = await axios.get(`http://localhost:3000/find/${service}/${config.version}`);
+                console.log('1');
+                const ip = conexion.data.ip;
+                const port = conexion.data.port;
+                var bol = await axios.get(`http://${ip}:${port}/Check/${evento}`);
+                if (bol) {
                     this.carrito.push(evento);
                     console.log("Fruta añadida a la cesta");
-                    return true;
                 } else {
                     console.log("No hay stock de este producto");
-                    return false;
                 }
-            }).catch((err) => {
-                console.log('Failed attempt' + err);
-                return false;
-            });
 
-
-
+            } catch (error) {
+                console.log(error);
+            }
         }
         //funcion de eliminar un producto
     removeProducto(evento) {
@@ -48,9 +40,14 @@ class Carrito {
         }
         //funcion para mostarr la cesta actual
     tostring() {
-        console.log("Tu cesta actual es: " + this.carrito);
-        return this.carrito;
+        var res = "Shopping Cart contains " + this.products.length + " product/s: ";
+
+        this.products.forEach(product => {
+            res += product.desc + ", ";
+        });
+        console.log(res);
+        return res;
     }
 
 }
-module.exports = { Carrito, ShoppingCartGenerator };
+module.exports = Carrito;
