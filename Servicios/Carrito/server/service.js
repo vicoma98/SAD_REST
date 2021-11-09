@@ -15,15 +15,18 @@ module.exports = (config) => {
 
     service.put('/add/:name', async(req, res, next) => {
         const producto = req.params.name;
-        await car.addProducto(producto);
-        return res.status(200).send();
+        const resultado = await car.addProducto(producto);
+        return res.json(resultado).status(200).send();
     });
 
-    service.get('/remove/:name', async(req, res, next) => {
-        return next('Not implemented');
+    service.get('/remove/:name', (req, res, next) => {
+        const producto = req.params.name;
+        const resultado = car.removeProducto(producto);
+        return res.json(resultado).status(200).send();
     });
     service.get('/list', (req, res, next) => {
-        return res.json(car.toString());
+        const listaCompra = car.tostring();
+        return res.json(listaCompra);
     });
 
     // eslint-disable-next-line no-unused-vars

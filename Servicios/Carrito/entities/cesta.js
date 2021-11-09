@@ -15,28 +15,32 @@ class Carrito {
         //funcion que añade un producto al carrito basandose en run() para comprobar si tiene o no stock
     async addProducto(evento) {
             try {
-                console.log('1');
                 const conexion = await axios.get(`http://localhost:3000/find/${service}/${version}`);
-                console.log('1');
                 const ip = conexion.data.ip;
                 const port = conexion.data.port;
-                var bol = await axios.get(`http://${ip}:${port}/Check/${evento}`);
+                const bol = await axios.get(`http://${ip}:${port}/Check/${evento}`);
                 if (bol) {
                     this.carrito.push(evento);
                     console.log("Fruta añadida a la cesta");
+                    return true;
                 } else {
                     console.log("No hay stock de este producto");
+                    return false;
                 }
 
             } catch (error) {
                 console.log(error);
+                return false;
             }
         }
         //funcion de eliminar un producto
     removeProducto(evento) {
             //falta comprobar que existe ese producto dentro de la lista
             const idex = this.carrito.indexOf(evento);
-            this.carrito.splice(idex, 1);
+            if (idex < 0) {
+                return false;
+            } else { this.carrito.splice(idex, 1); return true; }
+
         }
         //funcion para mostarr la cesta actual
     tostring() {
