@@ -20,7 +20,7 @@ class Carrito {
                 const port = conexion.data.port;
                 const bol = await axios.get(`http://${ip}:${port}/Check/${evento}`);
                 const boldeverdad= bol.data.result;
-                console.log(boldeverdad);
+                
                 if (boldeverdad) {
                     this.carrito.push(evento);
                     console.log("Fruta añadida a la cesta");
